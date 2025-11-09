@@ -2,6 +2,8 @@
 
 Open source platform for automated management and optimization of cloud resources (AWS, Azure, Google Cloud, on-prem) using modern artificial intelligence models (LLM, ML).
 
+**🚀 [Quick Start Guide](QUICKSTART.md)** | **📚 [Documentation](docs/)** | **🤝 [Contributing](CONTRIBUTING.md)** | **🐳 [Docker Setup](docs/docker_setup.md)**
+
 ## Features
 
 ### 🌩️ Multi-Cloud Support
@@ -281,7 +283,21 @@ class CustomOptimizer(AIOptimizationService):
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+- Setting up your development environment
+- Code style guidelines
+- Testing requirements
+- Pull request process
+
+Quick start for contributors:
+```bash
+git clone https://github.com/NickScherbakov/cloudmind-ai.git
+cd cloudmind-ai
+make setup
+make dev
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information.
 
 ## License
 
