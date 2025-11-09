@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CloudMind AI - Open source platform for intelligent multi-cloud resource management and optimization using AI">
+    <meta name="keywords" content="cloud, AI, optimization, multi-cloud, AWS, Azure, GCP, FinOps, AIOps, open source">
+    <meta name="author" content="Nick Scherbakov">
+    <title>CloudMind AI - Intelligent Cloud Management Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">☁️</span>
+                <span class="brand-name">CloudMind AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#roadmap">Roadmap</a>
+                <a href="docs/">Docs</a>
+                <a href="https://github.com/NickScherbakov/cloudmind-ai" target="_blank" class="btn-primary">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    The <span class="gradient-text">Intelligent Brain</span><br>
+                    for Your Multi-Cloud Infrastructure
+                </h1>
+                <p class="hero-subtitle">
+                    Open source platform that transforms chaotic multi-cloud environments into self-regulating, 
+                    transparent, and cost-optimized ecosystems using AI and machine learning.
+                </p>
+                <div class="hero-cta">
+                    <a href="https://github.com/NickScherbakov/cloudmind-ai" class="btn-hero" target="_blank">
+                        ⭐ Star on GitHub
+                    </a>
+                    <a href="QUICKSTART.md" class="btn-secondary">
+                        🚀 Quick Start
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Cloud Providers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">17</div>
+                        <div class="stat-label">API Endpoints</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Open Source</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">MIT</div>
+                        <div class="stat-label">License</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">The Challenge</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">💸</div>
+                    <h3>Exploding Costs</h3>
+                    <p>Cloud spending grows exponentially while visibility and control diminish. Companies waste 20-30% on idle or oversized resources.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🌪️</div>
+                    <h3>Multi-Cloud Chaos</h3>
+                    <p>Mixing AWS, Azure, GCP, on-prem, Kubernetes, serverless creates complexity that no human team can manage manually.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🔍</div>
+                    <h3>Lack of Intelligence</h3>
+                    <p>Traditional tools react to problems. We need proactive AI that predicts, optimizes, and acts autonomously.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Core Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-Cloud Support</h3>
+                    <p>Unified management across AWS, Azure, Google Cloud, and on-premises infrastructure.</p>
+                    <ul class="feature-list">
+                        <li>AWS EC2, S3, RDS, Lambda</li>
+                        <li>Azure VMs, Storage, SQL</li>
+                        <li>GCP Compute, Storage, CloudSQL</li>
+                        <li>On-Prem servers & metrics</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Optimization</h3>
+                    <p>LLM-driven analysis with explainable recommendations and confidence scoring.</p>
+                    <ul class="feature-list">
+                        <li>Resource rightsizing suggestions</li>
+                        <li>Cost forecasting & anomaly detection</li>
+                        <li>Usage pattern prediction (ML)</li>
+                        <li>Natural language infrastructure queries</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Monitoring</h3>
+                    <p>Comprehensive metrics collection, alerting, and historical tracking.</p>
+                    <ul class="feature-list">
+                        <li>CPU, memory, disk, network metrics</li>
+                        <li>Custom threshold alerts</li>
+                        <li>Health status dashboards</li>
+                        <li>Cost tracking per resource</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Automated Actions</h3>
+                    <p>Safe, policy-driven automation with simulation and rollback capabilities.</p>
+                    <ul class="feature-list">
+                        <li>Start/stop/resize resources</li>
+                        <li>Policy engine with guardrails</li>
+                        <li>What-if scenario simulation</li>
+                        <li>Compliance enforcement</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Extensible Architecture</h3>
+                    <p>Plugin-based design for custom providers, optimizers, and integrations.</p>
+                    <ul class="feature-list">
+                        <li>Custom cloud provider adapters</li>
+                        <li>Optimization plugin system</li>
+                        <li>Terraform & Kubernetes integration</li>
+                        <li>ChatOps notifications (Slack, Teams)</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Enterprise Ready</h3>
+                    <p>Security, observability, and production deployment built-in.</p>
+                    <ul class="feature-list">
+                        <li>Environment-based configuration</li>
+                        <li>Structured logging & tracing</li>
+                        <li>Docker & Docker Compose support</li>
+                        <li>REST API + CLI + SDK</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <h2 class="section-title">Architecture Overview</h2>
+            <p class="section-subtitle">
+                Modular, testable, and built for scale — from single teams to enterprise deployments.
+            </p>
+            <div class="architecture-diagram">
+                <div class="arch-layer">
+                    <div class="arch-box api">
+                        <strong>REST API</strong>
+                        <span>FastAPI + OpenAPI</span>
+                    </div>
+                    <div class="arch-box cli">
+                        <strong>CLI</strong>
+                        <span>Typer + Rich</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <div class="arch-box">
+                        <strong>AI Optimizer</strong>
+                        <span>LLM + ML Pipeline</span>
+                    </div>
+                    <div class="arch-box">
+                        <strong>Monitoring</strong>
+                        <span>Metrics & Alerts</span>
+                    </div>
+                    <div class="arch-box">
+                        <strong>Policy Engine</strong>
+                        <span>Rules & Safety</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <div class="arch-box">
+                        <strong>Core</strong>
+                        <span>Config, Models, Logger</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <div class="arch-box provider">AWS</div>
+                    <div class="arch-box provider">Azure</div>
+                    <div class="arch-box provider">GCP</div>
+                    <div class="arch-box provider">On-Prem</div>
+                </div>
+            </div>
+            <div class="tech-stack">
+                <h3>Tech Stack</h3>
+                <div class="tech-badges">
+                    <span class="badge">Python 3.8+</span>
+                    <span class="badge">FastAPI</span>
+                    <span class="badge">Typer</span>
+                    <span class="badge">Pydantic</span>
+                    <span class="badge">Pytest</span>
+                    <span class="badge">Docker</span>
+                    <span class="badge">OpenAI</span>
+                    <span class="badge">Prophet</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="roadmap">
+        <div class="container">
+            <h2 class="section-title">Roadmap & Vision</h2>
+            <p class="section-subtitle">
+                Our 12-18 month journey to becoming the de-facto open standard for intelligent multi-cloud management.
+            </p>
+            <div class="roadmap-timeline">
+                <div class="roadmap-phase">
+                    <div class="phase-badge now">Now</div>
+                    <h3>Foundation</h3>
+                    <ul>
+                        <li>✅ Modular architecture</li>
+                        <li>✅ Provider stubs (AWS, Azure, GCP, On-Prem)</li>
+                        <li>✅ REST API + CLI</li>
+                        <li>✅ Basic AI optimizer</li>
+                        <li>✅ Docker deployment</li>
+                    </ul>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="phase-badge next">Q1 2026</div>
+                    <h3>Real Integrations</h3>
+                    <ul>
+                        <li>🔄 Live provider adapters (boto3, azure-mgmt, google-cloud)</li>
+                        <li>🔄 CloudWatch/Azure Monitor/GCP Monitoring ingestion</li>
+                        <li>🔄 Cost Explorer & Billing APIs</li>
+                        <li>🔄 ML forecasting (Prophet, ARIMA)</li>
+                        <li>🔄 Web dashboard (React + FastAPI)</li>
+                    </ul>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="phase-badge future">Q2-Q3 2026</div>
+                    <h3>Intelligence Layer</h3>
+                    <ul>
+                        <li>🎯 LLM chain for explanations</li>
+                        <li>🎯 Policy engine (YAML/Rego/CEL)</li>
+                        <li>🎯 Anomaly detection</li>
+                        <li>🎯 Terraform & Kubernetes integration</li>
+                        <li>🎯 Plugin marketplace</li>
+                    </ul>
+                </div>
+
+                <div class="roadmap-phase">
+                    <div class="phase-badge moonshot">Moonshots</div>
+                    <h3>Autonomous Cloud</h3>
+                    <ul>
+                        <li>🚀 Real-time RL agent</li>
+                        <li>🚀 Infrastructure simulator</li>
+                        <li>🚀 Natural language → action</li>
+                        <li>🚀 Carbon footprint optimization</li>
+                        <li>🚀 Zero-touch compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Metrics -->
+    <section class="metrics">
+        <div class="container">
+            <h2 class="section-title">Success Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">5+</div>
+                    <div class="metric-label">Full Cloud Providers</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">20%</div>
+                    <div class="metric-label">Cost Savings Target</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">85%</div>
+                    <div class="metric-label">Forecast Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">10+</div>
+                    <div class="metric-label">Active Contributors</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Join the Revolution</h2>
+            <p class="cta-subtitle">
+                Help us build the intelligent nervous system for cloud infrastructure.
+                From bug fixes to ML agents — every contribution counts.
+            </p>
+            <div class="cta-buttons">
+                <a href="CONTRIBUTOR_VISION.md" class="btn-hero">
+                    📖 Read Contributor Vision
+                </a>
+                <a href="https://github.com/NickScherbakov/cloudmind-ai/issues" class="btn-secondary" target="_blank">
+                    🐛 Browse Issues
+                </a>
+            </div>
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <strong>🎓 Beginner Friendly</strong>
+                    <p>6 curated "Good First Issues" to get started</p>
+                </div>
+                <div class="cta-feature">
+                    <strong>📚 Well Documented</strong>
+                    <p>RFCs, plugin guides, and architecture docs</p>
+                </div>
+                <div class="cta-feature">
+                    <strong>🤝 Welcoming Community</strong>
+                    <p>Open discussions and collaborative design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CloudMind AI</h4>
+                    <p>Open source intelligent cloud management platform.</p>
+                    <p class="license">Licensed under MIT</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="README.md">Documentation</a></li>
+                        <li><a href="QUICKSTART.md">Quick Start</a></li>
+                        <li><a href="docs/api_reference.md">API Reference</a></li>
+                        <li><a href="docs/plugins.md">Plugin System</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="CONTRIBUTING.md">Contributing Guide</a></li>
+                        <li><a href="CONTRIBUTOR_VISION.md">Vision (EN)</a></li>
+                        <li><a href="CONTRIBUTOR_VISION_RU.md">Видение (RU)</a></li>
+                        <li><a href="docs/rfc/">RFC Process</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://github.com/NickScherbakov/cloudmind-ai" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://github.com/NickScherbakov/cloudmind-ai/issues" target="_blank">Issue Tracker</a></li>
+                        <li><a href="https://github.com/NickScherbakov/cloudmind-ai/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CloudMind AI. Built with ❤️ for the cloud community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

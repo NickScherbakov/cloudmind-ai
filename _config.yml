@@ -1,0 +1,55 @@
+# CloudMind AI GitHub Pages Configuration
+
+# Site settings
+title: CloudMind AI
+description: Open source platform for intelligent multi-cloud resource management and optimization using AI
+url: "https://nickscherbakov.github.io"
+baseurl: "/cloudmind-ai"
+
+# GitHub repository
+repository: NickScherbakov/cloudmind-ai
+
+# Theme (optional - GitHub Pages default theme)
+theme: minima
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .env
+  - .env.example
+  - __pycache__
+  - "*.pyc"
+  - venv
+  - .venv
+
+# Include patterns
+include:
+  - _docs
+  - _config.yml
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# SEO settings
+author: Nick Scherbakov
+twitter:
+  username: NickScherbakov
+social:
+  name: Nick Scherbakov
+  links:
+    - https://github.com/NickScherbakov
+
+# Google Analytics (optional - add your ID)
+# google_analytics: UA-XXXXXXXX-X
