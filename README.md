@@ -299,6 +299,48 @@ make dev
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information.
 
+## Good First Issues
+
+Looking for a starting point? Pick one of these curated beginner tasks. Open an Issue with the suggested title or jump straight to a PR:
+
+1. Implement AWS EC2 listing
+    - Title: `feat(aws): implement list_compute_resources via boto3`
+    - Goal: Return real EC2 instances (id, name, status, region, instance_type)
+    - File(s): `src/cloudmind/providers/aws.py`
+    - Acceptance: Unit test covers empty + non‑empty response
+
+2. CloudWatch CPU metric for one instance
+    - Title: `feat(aws): get_resource_metrics pulls CPUUtilization`
+    - Goal: Populate `cpu_usage` (%) for given instance id
+    - File(s): `src/cloudmind/providers/aws.py`
+    - Acceptance: Unit test with mocked boto3 client
+
+3. Simple AWS cost ingestion
+    - Title: `feat(cost): daily cost for last N EC2 instances`
+    - Goal: Fill `get_cost_data()` with daily & monthly cost samples
+    - File(s): `src/cloudmind/providers/aws.py`
+    - Acceptance: Test validates schema + aggregate totals
+
+4. CPU forecast prototype
+    - Title: `feat(ai): Prophet-based 7-day CPU forecast + /predict endpoint`
+    - Goal: Add forecast method and expose `/predict/{resource_id}`
+    - File(s): `src/cloudmind/ai/optimizer.py`, `src/cloudmind/api/main.py`
+    - Acceptance: Test ensures result shape (predicted averages + confidence)
+
+5. Basic policy rule
+    - Title: `feat(policy): rule if CPU < X and cost > Y → downsize recommendation`
+    - Goal: Add thresholds to config and integrate into optimization logic
+    - File(s): `src/cloudmind/ai/optimizer.py`, `src/cloudmind/core/config.py`
+    - Acceptance: Test toggles thresholds and asserts recommendation generated
+
+6. Docs: Explainable AI section
+    - Title: `docs(ai): add Explainable AI approach to README`
+    - Goal: Describe rationale, confidence scoring, guardrails, future ML
+    - File(s): `README.md`
+    - Acceptance: Clear section with 3–5 bullet roadmap items
+
+Tip: For larger proposals use the RFC template in `docs/rfc/`.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
