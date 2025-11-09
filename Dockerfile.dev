@@ -1,0 +1,40 @@
+# CloudMind AI Development Dockerfile
+# Includes development tools and supports hot-reload
+
+FROM python:3.12-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY src/ ./src/
+COPY cloudmind_api.py .
+COPY cloudmind_cli.py .
+COPY .env.example .
+COPY pyproject.toml .
+
+# Set PYTHONPATH
+ENV PYTHONPATH=/app/src:$PYTHONPATH
+
+# Create .env from example if it doesn't exist
+RUN if [ ! -f .env ]; then cp .env.example .env; fi
+
+# Expose API port
+EXPOSE 8000
+
+# Default command - run API server with hot-reload
+CMD ["python", "cloudmind_api.py"]

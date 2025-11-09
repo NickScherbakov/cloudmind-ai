@@ -1,0 +1,72 @@
+services:
+  cloudmind-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: cloudmind-dev
+    ports:
+      - "8000:8000"
+    environment:
+      # Development Settings
+      - DEBUG=true
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_RELOAD=true
+      - PYTHONPATH=/app/src
+      
+      # Provider Settings (disabled by default for development)
+      - AWS_ENABLED=false
+      - AZURE_ENABLED=false
+      - GCP_ENABLED=false
+      - ONPREM_ENABLED=false
+      
+      # AI Settings (disabled by default)
+      - AI_ENABLED=false
+      
+      # Monitoring Settings
+      - MONITORING_INTERVAL=300
+      - ALERT_THRESHOLD_CPU=80.0
+      - ALERT_THRESHOLD_MEMORY=80.0
+      - ALERT_THRESHOLD_COST=1000.0
+      
+      # Optimization Settings
+      - AUTO_OPTIMIZE=false
+      - OPTIMIZATION_INTERVAL=3600
+    env_file:
+      - .env
+    volumes:
+      # Mount source code for hot-reload during development
+      - ./src:/app/src
+      - ./cloudmind_api.py:/app/cloudmind_api.py
+      - ./cloudmind_cli.py:/app/cloudmind_cli.py
+      - ./tests:/app/tests
+      - ./examples:/app/examples
+      - ./docs:/app/docs
+      # Optional: Mount credentials files if needed
+      - ./credentials:/app/credentials:ro
+    networks:
+      - cloudmind-network
+    command: python cloudmind_api.py
+    stdin_open: true
+    tty: true
+
+  cloudmind-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: cloudmind-test
+    environment:
+      - PYTHONPATH=/app/src
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./.env.example:/app/.env
+    networks:
+      - cloudmind-network
+    command: pytest tests/ -v
+    profiles:
+      - test
+
+networks:
+  cloudmind-network:
+    driver: bridge
