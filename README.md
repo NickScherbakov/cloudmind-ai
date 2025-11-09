@@ -2,6 +2,8 @@
 
 Open source platform for automated management and optimization of cloud resources (AWS, Azure, Google Cloud, on-prem) using modern artificial intelligence models (LLM, ML).
 
+**🚀 [Quick Start Guide](QUICKSTART.md)** | **📚 [Documentation](docs/)** | **🤝 [Contributing](CONTRIBUTING.md)** | **🐳 [Docker Setup](docs/docker_setup.md)**
+
 ## Features
 
 ### 🌩️ Multi-Cloud Support
@@ -35,14 +37,54 @@ Open source platform for automated management and optimization of cloud resource
 
 ## Installation
 
-### Prerequisites
+### 🐳 Quick Start with Docker (Recommended)
+
+The easiest way to get started - one-click setup with Docker:
+
+**Prerequisites:**
+- [Docker](https://docs.docker.com/get-docker/) (version 20.10+)
+- [Docker Compose](https://docs.docker.com/compose/install/) (version 2.0+)
+
+**Option 1: Interactive Setup Script**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+**Option 2: Using Make**
+```bash
+make setup    # Initial setup
+make up       # Start production mode
+make dev      # Start development mode
+make test     # Run tests
+```
+
+**Option 3: Docker Compose Directly**
+```bash
+cp .env.example .env
+docker-compose up -d
+```
+
+Access the API at http://localhost:8000 and documentation at http://localhost:8000/docs
+
+📖 See [Docker Setup Guide](docs/docker_setup.md) for detailed instructions.
+
+### 🐍 Local Installation (Alternative)
+
+**Prerequisites:**
 - Python 3.8+
 - pip or poetry
 
-### Install Dependencies
+**Install Dependencies:**
 
 ```bash
 pip install -r requirements.txt
+```
+
+**Set PYTHONPATH:**
+
+```bash
+export PYTHONPATH=src:$PYTHONPATH
 ```
 
 ### Configuration
@@ -241,7 +283,21 @@ class CustomOptimizer(AIOptimizationService):
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+- Setting up your development environment
+- Code style guidelines
+- Testing requirements
+- Pull request process
+
+Quick start for contributors:
+```bash
+git clone https://github.com/NickScherbakov/cloudmind-ai.git
+cd cloudmind-ai
+make setup
+make dev
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information.
 
 ## License
 

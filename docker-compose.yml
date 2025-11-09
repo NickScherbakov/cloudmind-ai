@@ -1,0 +1,51 @@
+services:
+  cloudmind-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cloudmind-api
+    ports:
+      - "8000:8000"
+    environment:
+      # Application Settings
+      - DEBUG=false
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_RELOAD=false
+      
+      # Provider Settings (disabled by default for demo)
+      - AWS_ENABLED=false
+      - AZURE_ENABLED=false
+      - GCP_ENABLED=false
+      - ONPREM_ENABLED=false
+      
+      # AI Settings (disabled by default)
+      - AI_ENABLED=false
+      
+      # Monitoring Settings
+      - MONITORING_INTERVAL=300
+      - ALERT_THRESHOLD_CPU=80.0
+      - ALERT_THRESHOLD_MEMORY=80.0
+      - ALERT_THRESHOLD_COST=1000.0
+      
+      # Optimization Settings
+      - AUTO_OPTIMIZE=false
+      - OPTIMIZATION_INTERVAL=3600
+    env_file:
+      - .env
+    volumes:
+      # Optional: Mount credentials files if needed
+      - ./credentials:/app/credentials:ro
+    networks:
+      - cloudmind-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  cloudmind-network:
+    driver: bridge
