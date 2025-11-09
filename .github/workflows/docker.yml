@@ -7,10 +7,15 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate-docker:
     name: Validate Docker Configuration
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -28,6 +33,8 @@ jobs:
     name: Build Docker Images and Run Tests
     runs-on: ubuntu-latest
     needs: validate-docker
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
