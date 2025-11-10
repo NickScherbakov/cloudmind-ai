@@ -124,3 +124,34 @@ class MonitoringMetrics(BaseModel):
     network_in_mbps: Optional[float] = None
     network_out_mbps: Optional[float] = None
     custom_metrics: Dict[str, float] = Field(default_factory=dict)
+
+
+class Follower(BaseModel):
+    """Follower/subscriber model."""
+    id: str
+    email: str
+    name: Optional[str] = None
+    subscribed: bool = True
+    subscribed_at: datetime = Field(default_factory=datetime.utcnow)
+    tags: List[str] = Field(default_factory=list)
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
+class Message(BaseModel):
+    """Message model for sending to followers."""
+    id: str
+    subject: str
+    content: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    sent_at: Optional[datetime] = None
+    recipient_count: int = 0
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
+class MessageDelivery(BaseModel):
+    """Message delivery status."""
+    message_id: str
+    follower_id: str
+    sent_at: datetime = Field(default_factory=datetime.utcnow)
+    status: str = "sent"  # sent, failed, pending
+    error_message: Optional[str] = None

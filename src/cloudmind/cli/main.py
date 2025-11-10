@@ -12,6 +12,8 @@ from ..core.logger import logger
 from ..providers import ProviderFactory
 from ..ai import AIOptimizationService
 from ..monitoring import MonitoringService
+from ..notification import NotificationService
+from ..notification.templates import CLOUDMIND_INTRODUCTION_RU, CLOUDMIND_INTRODUCTION_EN
 
 app = typer.Typer(
     name="cloudmind",
@@ -299,6 +301,181 @@ def start_resource(
             console.print(f"[green]Resource {resource_id} started successfully[/green]")
         else:
             console.print(f"[red]Failed to start resource {resource_id}[/red]")
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+# Notification and Messaging Commands
+
+@app.command()
+def add_follower(
+    email: str = typer.Option(..., "--email", "-e", help="Follower email address"),
+    name: Optional[str] = typer.Option(None, "--name", "-n", help="Follower name"),
+):
+    """Add a new follower/subscriber."""
+    console.print(f"[cyan]Adding follower: {email}...[/cyan]")
+    
+    notification_service = NotificationService()
+    
+    try:
+        follower = notification_service.add_follower(email=email, name=name)
+        console.print(f"[green]Follower added successfully![/green]")
+        console.print(f"ID: {follower.id}")
+        console.print(f"Email: {follower.email}")
+        if follower.name:
+            console.print(f"Name: {follower.name}")
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+@app.command()
+def list_followers(
+    subscribed_only: bool = typer.Option(True, "--subscribed-only", help="Show only subscribed followers"),
+):
+    """List all followers."""
+    console.print("[cyan]Listing followers...[/cyan]")
+    
+    notification_service = NotificationService()
+    
+    try:
+        followers = notification_service.get_followers(subscribed_only=subscribed_only)
+        
+        if not followers:
+            console.print("[yellow]No followers found[/yellow]")
+            return
+        
+        table = Table(title=f"Followers ({len(followers)})")
+        table.add_column("ID", style="cyan")
+        table.add_column("Email", style="green")
+        table.add_column("Name", style="white")
+        table.add_column("Subscribed", style="yellow")
+        table.add_column("Subscribed At", style="magenta")
+        
+        for follower in followers:
+            table.add_row(
+                follower.id[:8] + "...",
+                follower.email,
+                follower.name or "N/A",
+                "✓" if follower.subscribed else "✗",
+                follower.subscribed_at.strftime("%Y-%m-%d %H:%M")
+            )
+        
+        console.print(table)
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+@app.command()
+def create_message(
+    subject: str = typer.Option(..., "--subject", "-s", help="Message subject"),
+    content: str = typer.Option(..., "--content", "-c", help="Message content"),
+):
+    """Create a new message."""
+    console.print("[cyan]Creating message...[/cyan]")
+    
+    notification_service = NotificationService()
+    
+    try:
+        message = notification_service.create_message(subject=subject, content=content)
+        console.print(f"[green]Message created successfully![/green]")
+        console.print(f"Message ID: {message.id}")
+        console.print(f"Subject: {message.subject}")
+        console.print(f"Use 'send-message --message-id {message.id}' to send it to followers")
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+@app.command()
+def create_cloudmind_message(
+    language: str = typer.Option("ru", "--language", "-l", help="Language: 'ru' or 'en'"),
+):
+    """Create a message about CloudMind AI project (pre-defined template)."""
+    console.print(f"[cyan]Creating CloudMind AI introduction message in {language.upper()}...[/cyan]")
+    
+    notification_service = NotificationService()
+    
+    try:
+        if language.lower() == "ru":
+            template = CLOUDMIND_INTRODUCTION_RU
+        elif language.lower() == "en":
+            template = CLOUDMIND_INTRODUCTION_EN
+        else:
+            console.print(f"[red]Unsupported language: {language}. Use 'ru' or 'en'[/red]")
+            raise typer.Exit(1)
+        
+        message = notification_service.create_message(
+            subject=template["subject"],
+            content=template["content"]
+        )
+        
+        console.print(f"[green]CloudMind AI message created successfully![/green]")
+        console.print(f"Message ID: {message.id}")
+        console.print(f"Subject: {message.subject}")
+        console.print(f"\nUse 'send-message --message-id {message.id}' to send it to followers")
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+@app.command()
+def send_message(
+    message_id: str = typer.Option(..., "--message-id", "-m", help="Message ID to send"),
+):
+    """Send a message to all followers."""
+    console.print(f"[cyan]Sending message {message_id}...[/cyan]")
+    
+    notification_service = NotificationService()
+    
+    try:
+        result = notification_service.send_message_to_followers(message_id=message_id)
+        
+        if result.get("success"):
+            console.print(f"[green]Message sent successfully![/green]")
+            console.print(f"Sent to: {result['sent_count']} followers")
+            if result.get('failed_count', 0) > 0:
+                console.print(f"[yellow]Failed: {result['failed_count']} deliveries[/yellow]")
+        else:
+            console.print(f"[red]Failed to send message: {result.get('error')}[/red]")
+    except Exception as e:
+        console.print(f"[red]Error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+@app.command()
+def list_messages():
+    """List all created messages."""
+    console.print("[cyan]Listing messages...[/cyan]")
+    
+    notification_service = NotificationService()
+    
+    try:
+        messages = notification_service.get_messages()
+        
+        if not messages:
+            console.print("[yellow]No messages found[/yellow]")
+            return
+        
+        table = Table(title=f"Messages ({len(messages)})")
+        table.add_column("ID", style="cyan")
+        table.add_column("Subject", style="green")
+        table.add_column("Created", style="magenta")
+        table.add_column("Sent", style="yellow")
+        table.add_column("Recipients", style="white")
+        
+        for message in messages:
+            table.add_row(
+                message.id[:8] + "...",
+                message.subject[:50] + "..." if len(message.subject) > 50 else message.subject,
+                message.created_at.strftime("%Y-%m-%d %H:%M"),
+                "✓" if message.sent_at else "✗",
+                str(message.recipient_count)
+            )
+        
+        console.print(table)
     except Exception as e:
         console.print(f"[red]Error: {e}[/red]")
         raise typer.Exit(1)
