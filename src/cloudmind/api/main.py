@@ -2,18 +2,19 @@
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Optional
+from typing import List, Optional, Dict
 from datetime import datetime
 
 from ..core.config import settings
 from ..core.models import (
     CloudProvider, OptimizationRecommendation, MonitoringMetrics,
-    CloudResource, CostData
+    CloudResource, CostData, Follower, Message
 )
 from ..core.logger import logger
 from ..providers import ProviderFactory
 from ..ai import AIOptimizationService
 from ..monitoring import MonitoringService
+from ..notification import NotificationService
 
 
 # Create FastAPI app
@@ -36,12 +37,13 @@ app.add_middleware(
 providers = {}
 monitoring_service = None
 ai_service = None
+notification_service = None
 
 
 @app.on_event("startup")
 async def startup_event():
     """Initialize services on startup."""
-    global providers, monitoring_service, ai_service
+    global providers, monitoring_service, ai_service, notification_service
     
     logger.info("Starting CloudMind AI API...")
     
@@ -109,6 +111,10 @@ async def startup_event():
         }
         ai_service = AIOptimizationService(ai_config)
         logger.info("AI optimization service initialized")
+    
+    # Initialize notification service
+    notification_service = NotificationService()
+    logger.info("Notification service initialized")
     
     logger.info("CloudMind AI API started successfully")
 
@@ -344,4 +350,129 @@ async def delete_resource(resource_id: str, provider: str):
         return {"success": success, "resource_id": resource_id, "action": "delete"}
     except Exception as e:
         logger.error(f"Failed to delete resource: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# Notification and Messaging Endpoints
+
+@app.post("/followers")
+async def add_follower(email: str, name: Optional[str] = None, tags: Optional[List[str]] = None):
+    """Add a new follower/subscriber."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    try:
+        follower = notification_service.add_follower(email=email, name=name, tags=tags)
+        return {"success": True, "follower": follower.model_dump()}
+    except Exception as e:
+        logger.error(f"Failed to add follower: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/followers")
+async def list_followers(subscribed_only: bool = True, tags: Optional[List[str]] = None):
+    """List all followers."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    try:
+        followers = notification_service.get_followers(subscribed_only=subscribed_only, tags=tags)
+        return {
+            "count": len(followers),
+            "followers": [f.model_dump() for f in followers]
+        }
+    except Exception as e:
+        logger.error(f"Failed to list followers: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/followers/{follower_id}")
+async def get_follower(follower_id: str):
+    """Get a specific follower."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    follower = notification_service.get_follower(follower_id)
+    if not follower:
+        raise HTTPException(status_code=404, detail="Follower not found")
+    
+    return follower.model_dump()
+
+
+@app.post("/followers/{follower_id}/unsubscribe")
+async def unsubscribe_follower(follower_id: str):
+    """Unsubscribe a follower."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    success = notification_service.unsubscribe_follower(follower_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Follower not found")
+    
+    return {"success": True, "message": "Follower unsubscribed"}
+
+
+@app.post("/messages")
+async def create_message(subject: str, content: str, metadata: Optional[Dict] = None):
+    """Create a new message."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    try:
+        message = notification_service.create_message(
+            subject=subject,
+            content=content,
+            metadata=metadata
+        )
+        return {"success": True, "message": message.model_dump()}
+    except Exception as e:
+        logger.error(f"Failed to create message: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/messages")
+async def list_messages():
+    """List all messages."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    try:
+        messages = notification_service.get_messages()
+        return {
+            "count": len(messages),
+            "messages": [m.model_dump() for m in messages]
+        }
+    except Exception as e:
+        logger.error(f"Failed to list messages: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/messages/{message_id}/send")
+async def send_message(message_id: str, tags: Optional[List[str]] = None):
+    """Send a message to followers."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    try:
+        result = notification_service.send_message_to_followers(message_id=message_id, tags=tags)
+        return result
+    except Exception as e:
+        logger.error(f"Failed to send message: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/messages/{message_id}/deliveries")
+async def get_message_deliveries(message_id: str):
+    """Get delivery status for a message."""
+    if not notification_service:
+        raise HTTPException(status_code=503, detail="Notification service not available")
+    
+    try:
+        deliveries = notification_service.get_message_deliveries(message_id)
+        return {
+            "count": len(deliveries),
+            "deliveries": [d.model_dump() for d in deliveries]
+        }
+    except Exception as e:
+        logger.error(f"Failed to get deliveries: {e}")
         raise HTTPException(status_code=500, detail=str(e))

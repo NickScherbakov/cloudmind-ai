@@ -21,3 +21,6 @@ credentials/
 # Docker volumes
 data/
 logs/
+
+# CloudMind data directory
+.cloudmind_data/

@@ -35,6 +35,13 @@ Open source platform for automated management and optimization of cloud resource
 - **CLI**: Rich command-line interface with Typer
 - **Programmatic**: Python SDK for custom integrations
 
+### 📧 Followers Messaging System
+- Manage subscribers and send project updates
+- Pre-built templates highlighting CloudMind AI features
+- Tag-based filtering for targeted messaging
+- Track message delivery status
+- REST API and CLI support
+
 ## Installation
 
 ### 🐳 Quick Start with Docker (Recommended)
@@ -193,6 +200,23 @@ Start API from CLI:
 python cloudmind_cli.py start-api --host 0.0.0.0 --port 8000
 ```
 
+Manage followers and send messages:
+```bash
+# Add a follower
+python cloudmind_cli.py add-follower --email user@example.com --name "John Doe"
+
+# Create CloudMind AI introduction message (Russian or English)
+python cloudmind_cli.py create-cloudmind-message --language ru
+
+# Send message to all followers
+python cloudmind_cli.py send-message --message-id <message-id>
+
+# List all followers
+python cloudmind_cli.py list-followers
+```
+
+See the [Messaging System Documentation](docs/messaging_system.md) for more details.
+
 ## API Endpoints
 
 ### General
@@ -214,6 +238,16 @@ python cloudmind_cli.py start-api --host 0.0.0.0 --port 8000
 - `GET /cost` - Get cost data across providers
 - `GET /optimization/recommendations` - Get AI-powered optimization recommendations
 
+### Messaging & Followers
+- `POST /followers` - Add a new follower
+- `GET /followers` - List all followers
+- `GET /followers/{follower_id}` - Get a specific follower
+- `POST /followers/{follower_id}/unsubscribe` - Unsubscribe a follower
+- `POST /messages` - Create a new message
+- `GET /messages` - List all messages
+- `POST /messages/{message_id}/send` - Send message to followers
+- `GET /messages/{message_id}/deliveries` - Get message delivery status
+
 ## Architecture
 
 ```
@@ -223,6 +257,7 @@ cloudmind-ai/
 │   ├── providers/      # Cloud provider implementations
 │   ├── ai/             # AI/ML optimization services
 │   ├── monitoring/     # Resource monitoring services
+│   ├── notification/   # Follower messaging system
 │   ├── api/            # FastAPI REST API
 │   ├── cli/            # Command-line interface
 │   └── utils/          # Utility functions
